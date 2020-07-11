@@ -44,7 +44,10 @@ def main():
 
 def on_connect(client, userdata, flag, rc):
     print("Connected with result code %d" % rc)
-    client.subscribe("/training/001")  # SubscribeするTopicを設定
+    topic = get_option("--topic")
+    if topic is None:
+        topic = "/topics/topic01"
+    client.subscribe(topic)  # SubscribeするTopicを設定
 
 
 def on_disconnect(client, userdata, flag, rc):

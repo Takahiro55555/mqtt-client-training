@@ -37,6 +37,11 @@ def main():
         exit()
     keepalive = int(keepalive)  # 整数型へ変換
 
+    # [任意] PublishするTopic
+    topic = get_option("--topic")
+    if topic is None:
+        topic = "/topics/topic01"
+
     # 接続
     client.connect(hostname, port, keepalive)
 
@@ -47,7 +52,7 @@ def main():
     counter = 0
     while True:
         # トピック名とメッセージを決めて送信
-        client.publish("/training/001", "[COUNTER: %d] Hello, MQTT." % counter)
+        client.publish(topic, "[COUNTER: %d] Hello, MQTT." % counter)
         counter += 1
         sleep(3)   # 3秒待つ
 

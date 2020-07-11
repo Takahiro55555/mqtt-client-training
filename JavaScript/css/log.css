@@ -1,0 +1,15 @@
+.console{
+    height: 90%;
+    white-space: normal;
+    overflow: scroll;
+    font-family:monospace;
+    font-weight: bold;
+}
+
+.log{
+    color: rgb(85, 85, 85);
+}
+
+.error{
+    color: rgb(238, 51, 88);
+}

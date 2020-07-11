@@ -27,7 +27,10 @@ function connect() {
 }
 
 function onConnect() {
+    const topic = document.getElementById("topic").value;
+
     logPrintln("Connected");
+    mqttClient.subscribe(String(topic));
 }
 
 function onConnectionLost(responseObject) {

@@ -7,7 +7,7 @@ function connect() {
         // 切断処理
         mqttClient.disconnect();
 
-        buttonsOnDisconnect();
+        formOnDisconnect();
         isConnecting = false;
     } else {
         // 接続処理
@@ -21,7 +21,7 @@ function connect() {
         mqttClient.onMessageArrived = onMessageArrived;
         mqttClient.connect({ onSuccess: onConnect });
 
-        buttonsOnConnect();
+        formOnConnect();
         isConnecting = true;
     }
 }
@@ -31,7 +31,7 @@ function onConnect() {
 }
 
 function onConnectionLost(responseObject) {
-    buttonsOnDisconnect();
+    formOnDisconnect();
     isConnecting = false;
 
     if (responseObject.errorCode != 0) {
@@ -45,24 +45,40 @@ function onMessageArrived(message) {
     logPrintln("[Arrived message] " + message.payloadString);
 }
 
-function buttonsOnConnect() {
+function formOnConnect() {
+    const hostNameInput = document.getElementById("hostName");
+    const portInput = document.getElementById("port");
+    const topicInput = document.getElementById("topic");
+    const clientIdInput = document.getElementById("clientId");
     const connectButton = document.getElementById("connect");
     const publishButton = document.getElementById("publish");
 
     connectButton.innerText = "Disconnect";
-    publishButton.removeAttribute("disabled");
+    hostNameInput.setAttribute("disabled", true);
+    portInput.setAttribute("disabled", true);
+    topicInput.setAttribute("disabled", true);
+    clientIdInput.setAttribute("disabled", true);
 
+    publishButton.removeAttribute("disabled");
     connectButton.classList.add('btn-danger');
     connectButton.classList.remove('btn-primary');
 }
 
-function buttonsOnDisconnect() {
+function formOnDisconnect() {
+    const hostNameInput = document.getElementById("hostName");
+    const portInput = document.getElementById("port");
+    const topicInput = document.getElementById("topic");
+    const clientIdInput = document.getElementById("clientId");
     const connectButton = document.getElementById("connect");
     const publishButton = document.getElementById("publish");
 
     connectButton.innerText = "Connect";
-    publishButton.setAttribute("disabled", true);
+    hostNameInput.removeAttribute("disabled");
+    portInput.removeAttribute("disabled");
+    topicInput.removeAttribute("disabled");
+    clientIdInput.removeAttribute("disabled");
 
+    publishButton.setAttribute("disabled", true);
     connectButton.classList.add('btn-primary');
     connectButton.classList.remove('btn-danger');
 }
